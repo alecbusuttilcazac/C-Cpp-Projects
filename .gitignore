@@ -2,6 +2,7 @@
 *.d
 
 # Compiled Object files
+**/bin
 *.slo
 *.lo
 *.o
@@ -39,3 +40,7 @@
 
 # debug information files
 *.dwo
+
+# Project-specific ignores
+.vscode/
+cpp-csv-library/example.csv
