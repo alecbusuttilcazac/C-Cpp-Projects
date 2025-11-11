@@ -1,8 +1,6 @@
 # C-Cpp-Projects
 A collection of C and C++ projects for learning and experimentation.
 
-Includes a small header-only CSV utility in `cpp-csv-library/` providing Reader, Writer and ReaderWriter helpers (C++17) for robust CSV read/write with RFC-style quoting and header-aware access.
-
 ## Included projects
 -----------------
 
@@ -18,4 +16,17 @@ Includes a small header-only CSV utility in `cpp-csv-library/` providing Reader,
 	./bin/CSVuser
 	```
 
-See `cpp-csv-library/README.md` for full details and usage examples.
+	See `cpp-csv-library/README.md` for full details and usage examples.
+
+- `cpp-table-library/` — small header-only Table utility (C++17). It provides:
+	- `table::Table`: a lightweight 2D table abstraction (rows of string fields) with checked accessors, row proxies for [][] access, and convenience methods (view/copy/rowRef/insertRow/removeRow).
+	- Exception types for precise error handling (RowOutOfBoundsException, ColumnOutOfBoundsException, NoTableHeaderException).
+
+	Quick build hint (from the `cpp-table-library` directory):
+
+	```bash
+	g++ -std=c++17 TableUser.cpp -I. -o bin/TableUser
+	./bin/TableUser
+	```
+
+	See `cpp-table-library/` for examples and header documentation.
