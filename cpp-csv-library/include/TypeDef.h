@@ -1,5 +1,8 @@
-#ifndef CTYPEDEF_H // If NOT included yet
-#define CTYPEDEF_H 1
+#pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 
@@ -36,4 +39,6 @@ typedef uint64_t uint64;
     #define COLOUR_BRIGHT_WHITE   "\033[97m"
 //
 
-#endif // CTypedef.h now included
+#ifdef __cplusplus
+} // extern "C"
+#endif

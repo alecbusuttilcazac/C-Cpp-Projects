@@ -1,13 +1,19 @@
-#include "CSV.h"
+#include "include/TypeDef.hpp"
+#include "include/Error.hpp"
+#include "include/Table.hpp"
+#include "CSV.hpp"
 
-// fix line in writer,
-// w.getRowNumber()
+
+// Demo program for csv::Reader / csv::Writer and table::Table
+// - Shows basic read/write usage and how to access table cells using [] and [][] notation.
+// - Uses explicit indexed iteration over table rows (table.rowRef(i)) so row[col] works reliably.
 
 using namespace std;
 
-int main() {
-    // Writer usage
-    CSV::Writer* w = new CSV::Writer;
+int main() {    
+    // Writer usage: write a few example rows to "example.csv".
+    // Demonstrates writeRow(), flush(), delimiter management and getRowNumber().
+    csv::Writer* w = new csv::Writer;
     w->setWarningCallback([](const std::string& msg) {
         std::cerr << "CSV Writer Warning: " << msg << std::endl;
     });
@@ -26,8 +32,9 @@ int main() {
     w->close();
     delete w;
 
-    // Reader usage
-    CSV::Reader r(1);
+    // Reader usage: open the same file and demonstrate reading.
+    // We open with a start offset to show setHeader() and row navigation examples.
+    csv::Reader r(1);
     r.setWarningCallback([](const std::string& msg) {
         std::cerr << "CSV Reader Warning: " << msg << std::endl;
     });
@@ -37,8 +44,8 @@ int main() {
 
     // Exception handling
     try {
-        throw CSV::NonFatalException("hi");
-    } catch (const CSV::NonFatalException& e) {
+        throw error::NonFatalException("hi");
+    } catch (const error::NonFatalException& e) {
         std::cerr << "\nCSV error caught:\n\t" << e.what() << std::endl;
     }
     std::cout << "current line is " << r.getRowNumber() << std::endl;
@@ -66,15 +73,20 @@ int main() {
     }
     std::cout << "current line is " << r.getRowNumber() << std::endl;
 
-    // Read all rows
+    // Read all rows into a table. Iterate by index and use rowRef(i)
+    // so we can use row[col] (i.e. [][] notation) and avoid any iterator
+    // overload issues with custom Table types.
     auto table = r.readAll();
     std::cout << "the rows you just read:\n";
-    for (const auto& row : *table) {
+    uint32 totalRows = table.getHeight();
+    for (uint32 ri = 0; ri < totalRows; ++ri) {
+        const auto& rowRef = table.rowRef(ri); // reference to internal row vector
         bool firstElement = true;
         std::cout << "    [";
-        for (const auto& item : row) {
+        for (size_t ci = 0; ci < rowRef.size(); ++ci) {
             if (!firstElement) std::cout << ",";
-            std::cout << item;
+            // Use [][]-style access: table[ri][ci] would also work via proxies
+            std::cout << rowRef[ci];
             firstElement = false;
         }
         std::cout << "]" << std::endl;
@@ -108,7 +120,7 @@ int main() {
             firstElement = false;
         }
         std::cout << "]" << std::endl;
-    } catch (const CSV::SchemaMismatchException& e) {
+    } catch (const csv::SchemaMismatchException& e) {
         std::cerr << "Column 'field2' not found: " << e.what() << std::endl;
     }
 
@@ -117,19 +129,19 @@ int main() {
     try {
         std::string field = r.getFieldByType(r.getRowNumber(), "field2");
         std::cout << "Field 'field2' as string: " << field << std::endl;
-    } catch (const CSV::SchemaMismatchException& e) {
+    } catch (const csv::SchemaMismatchException& e) {
         std::cerr << "Field 'field2' not found: " << e.what() << std::endl;
-    } catch (const CSV::ShortRowException& e) {
+    } catch (const csv::ShortRowException& e) {
         std::cerr << "Row too short: " << e.what() << std::endl;
     }
 
     // Demonstrate error handling for file not found
     try{
-        CSV::Reader r2;
+        csv::Reader r2;
         r2.open("nonexistent.csv");
-    }catch (const CSV::FatalException& e) {
+    }catch (const error::FatalException& e) {
         std::cerr << e.what() << std::endl;
-    }catch (const CSV::NonFatalException& e) {
+    }catch (const error::NonFatalException& e) {
         std::cerr << e.what() << std::endl;
     }
 

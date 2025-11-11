@@ -4,8 +4,7 @@
 #error This header requires at least C++11
 #endif
 
-#ifndef CPPTYPEDEF_H // If NOT included yet
-#define CPPTYPEDEF_H 1
+#pragma once
 
 #include <cstdint>
 
@@ -41,5 +40,3 @@ using uint64 = std::uint64_t;
     #define COLOUR_BRIGHT_CYAN    "\033[96m"
     #define COLOUR_BRIGHT_WHITE   "\033[97m"
 //
-
-#endif // CppTypedef.h now included
