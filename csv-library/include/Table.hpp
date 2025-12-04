@@ -91,6 +91,9 @@ public:
     :   m_table(table)
     ,   m_header(header)
     {}
+    Table(std::vector<std::string> header)
+    :   m_header(header)
+    {}
     
     void setTable(const std::vector<std::vector<std::string>>& table);
 
