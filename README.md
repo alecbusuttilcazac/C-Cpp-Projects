@@ -9,7 +9,7 @@ A collection of C++ projects for learning and experimentation.
 	- Writer: RFC-style quoting/escaping and append/overwrite modes.
 	- ReaderWriter: convenience class that opens the same file for both reading and writing.
 
-	Quick build hint (from the `-csv-library` directory):
+	Quick build hint (from the `csv-library` directory):
 
 	```bash
 	g++ -std=c++17 CSVuser.cpp -o bin/CSVuser
