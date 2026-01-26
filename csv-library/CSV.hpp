@@ -10,6 +10,7 @@
 
 // Standard library includes
 #include <stdexcept>
+#include <cstdint>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -19,9 +20,19 @@
 #include <functional>
 #include <optional>
 
-#include "include/TypeDef.hpp" // Project-specific typedefs
 #include "include/Error.hpp"  // Project-specific error handling
 #include "include/Table.hpp"  // Table class
+
+using int8 = std::int8_t;
+using int16 = std::int16_t;
+using int32 = std::int32_t;
+using int64 = std::int64_t;
+using uint8 = std::uint8_t;
+using uint16 = std::uint16_t;
+using uint32 = std::uint32_t;
+using uint64 = std::uint64_t;
+
+#define COLOUR_BLACK "\033[30m";
 
 // TODO:
 // - Add find() function
@@ -894,7 +905,7 @@ inline void Writer::writeRow(const std::vector<std::string>& row){
     
     for (size_t i = 0; i < row.size(); ++i) {
         if (i > 0) file << delimiter;  // add delimiter before second+ row
-        file << parseString(row[i]);  // ← Parse each string before writing
+        file << parseString(row[i]);  // Parse each string before writing
     }
     file << '\n';  // endl would constantly flush the input buffer, affecting performance
     if (!file.good()) throw WriteLineException(rowNumber, path);
@@ -908,7 +919,7 @@ inline void Writer::writeRow(const std::vector<std::string>& row, char delim){
     
     for (size_t i = 0; i < row.size(); ++i) {
         if (i > 0) file << delim;  // add delimiter before second+ row
-        file << parseString(row[i], delim);  // ← Parse each string before writing
+        file << parseString(row[i], delim);  // Parse each string before writing
     }
     file << '\n';  // endl would constantly flush the input buffer, affecting performance
     if (!file.good()) throw WriteLineException(rowNumber, path);

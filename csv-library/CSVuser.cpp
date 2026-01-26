@@ -1,4 +1,3 @@
-#include "include/TypeDef.hpp"
 #include "include/Error.hpp"
 #include "include/Table.hpp"
 #include "CSV.hpp"

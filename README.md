@@ -1,6 +1,10 @@
 # CPP-Projects
 A collection of C++ projects for learning and experimentation.
 
+---
+**Note on AI Assistance:**
+All code in these projects was written almost entirely by me. AI (GitHub Copilot) was used only sparingly for guidance, tough bug fixes, and documentation — not for generating code in large batches.
+
 ## Included projects
 -----------------
 
@@ -17,6 +21,38 @@ A collection of C++ projects for learning and experimentation.
 	```
 
 	See `csv-library/README.md` for full details and usage examples.
+	
+- `reduciblearray-data-structure/` — robust C++17 dynamic array with activeness tracking. It provides:
+	- `ReducibleArray<T>`: a custom container for explicit memory management, element activeness, and safe access.
+	- Exception-based error handling and iterators for active/all elements.
+	- Example usage and tests in `ReducibleArrayUser.cpp`.
+	- C version is experimental and not complete.
+
+	Quick build hint (from the `reduciblearray-data-structure` directory):
+
+	```bash
+	g++ -std=c++17 ReducibleArrayUser.cpp -o bin/ReducibleArrayUser
+	./bin/ReducibleArrayUser
+	```
+
+	See `reduciblearray-data-structure/README.md` for more details.
+
+- `matrix-library/` — minimal C++17 header-only matrix utility for 2D matrices (vectors of vectors). It provides:
+	- `Matrix`: a simple 2D matrix class for basic operations (construction, element access, resizing).
+	- Example usage and tests in `MatrixUser.cpp`.
+	- Only supports 2D matrices; not a complete or production-ready library.
+
+	Quick build hint (from the `matrix-library` directory):
+
+	```bash
+	g++ -std=c++17 MatrixUser.cpp -o bin/MatrixUser
+	./bin/MatrixUser
+	```
+
+	See `matrix-library/README.md` for more details.
+
+
+
 
 - `table-library/` — small header-only Table utility (C++17). It provides:
 	- `table::Table`: a lightweight 2D table abstraction (rows of string fields) with checked accessors, row proxies for [][] access, and convenience methods (view/copy/rowRef/insertRow/removeRow).
