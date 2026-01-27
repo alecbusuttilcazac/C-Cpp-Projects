@@ -442,6 +442,24 @@ size_t ReducibleArray<T>::emplace(T&& item){
     throw std::runtime_error("Internal mismatch error between usedCount and actual used count");
 }
 
+template<typename T>
+typename ReducibleArray<T>::Iterator ReducibleArray<T>::find(const T& value) {
+    for (size_t i = 0; i < active.size(); ++i) {
+        if (active[i] && *(array[i]) == value)
+            return Iterator(this, i);
+    }
+    return end();
+}
+
+template<typename T>
+typename ReducibleArray<T>::ConstIterator ReducibleArray<T>::find(const T& value) const {
+    for (size_t i = 0; i < active.size(); ++i) {
+        if (active[i] && *(array[i]) == value)
+            return ConstIterator(this, i);
+    }
+    return end();
+}
+
 template<typename T> 
 void ReducibleArray<T>::resize(size_t size){
     resize(size, T());
