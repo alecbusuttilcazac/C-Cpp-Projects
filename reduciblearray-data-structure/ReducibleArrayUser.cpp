@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <vector>
 #include "ReducibleArray.hpp"
@@ -27,6 +28,20 @@ int main() {
     cout << "array[1] = " << array[1] << endl;
     cout << "SIZE = " << array.size() << ", USED = " << array.usedSize() << endl;
 
+    // === Vector Initialization Test ===
+    std::cout << "\n=== Vector Initialization ===" << std::endl;
+    std::vector<std::string> vecInit = {"vec1", "vec2", "vec3"};
+    ReducibleArray<std::string> vecArray(vecInit);
+    std::cout << "Initialized from vector: ";
+    for (size_t i = 0; i < vecArray.size(); ++i) {
+        if (vecArray.exists(i))
+            std::cout << vecArray[i] << " ";
+        else
+            std::cout << "(inactive) ";
+    }
+    std::cout << std::endl;
+    std::cout << "SIZE = " << vecArray.size() << ", USED = " << vecArray.usedSize() << std::endl;
+    
     cout << "\n=== Freeing and Access ===" << endl;
     array.destroy(1);
     try {
@@ -106,17 +121,28 @@ int main() {
     cout << "Mapping: ";
     for (auto m : map) cout << m << " ";
     cout << endl;
+    
+    array.destroy(1);
 
     cout << "\n=== Iterators ===" << endl;
     cout << "All elements: ";
-    for (auto it = array.begin(); it != array.end(); ++it)
-        cout << *it << " ";
+    
+    size_t idxCounter = 0;
+    for (auto it = array.begin(); it != array.end(); ++it, ++idxCounter) {
+        if(!array.exists(idxCounter))
+            cout << "(inactive) ";
+        else
+            cout << *it << " ";
+    }
+        
     cout << endl;
 
     cout << "Active elements: ";
     for (auto it = array.activeBegin(); it != array.activeEnd(); ++it)
         cout << *it << " ";
     cout << endl;
+    
+    array.emplace(1, "firstElement!");
 
     cout << "\n=== clear, reset, and freeAll ===" << endl;
     array.clear();

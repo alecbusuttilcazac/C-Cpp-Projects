@@ -13,6 +13,8 @@ private:
 public:
     ReducibleArray();
     ReducibleArray(std::initializer_list<T> list);
+    ReducibleArray(const std::vector<T>& vec);
+    ReducibleArray(std::vector<T>&& vec);
     ReducibleArray(size_t newSize);
     // initialises size newSize with default value
     ReducibleArray(size_t newSize, const T& defaultValue); 
@@ -163,6 +165,28 @@ ReducibleArray<T>::ReducibleArray(std::initializer_list<T> list)
     size_t i = 0;
     for(const auto& val : list)
         array[i++] = new T(val);
+}
+
+template<typename T>
+ReducibleArray<T>::ReducibleArray(const std::vector<T>& vec)              
+:   usedCount(vec.size()),
+    active(vec.size(), true)
+{    
+    array = new T*[active.size()];
+    size_t i = 0;
+    for(const auto& val : vec)
+        array[i++] = new T(val);
+}
+
+template<typename T>
+ReducibleArray<T>::ReducibleArray(std::vector<T>&& vec)              
+:   usedCount(vec.size()),
+    active(vec.size(), true)
+{    
+    array = new T*[active.size()];
+    size_t i = 0;
+    for(const auto& val : vec)
+        array[i++] = new T(std::move(val));
 }
 
 template<typename T> 
