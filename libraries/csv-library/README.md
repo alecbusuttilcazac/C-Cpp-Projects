@@ -2,6 +2,16 @@
 
 Lightweight C++17 CSV utilities: Reader, Writer and ReaderWriter classes plus helpful exceptions and utilities for robust CSV handling.
 
+## About AI Assistance
+
+This project was developed with the help of AI (GitHub Copilot). Nearly 100% of the code was written by me. AI did not generate code in large batches, but instead provided guidance, bug fixes, and documentation support throughout the process. Specifically, AI played a key role in:
+
+- Guiding design decisions and API structure
+- Fixing bugs and improving memory management
+- Reviewing and refining code for safety and idiomatic C++
+- Providing advice on error handling and best practices
+- Generating and editing the majority of this README for clarity and completeness
+
 ## Overview
 
 This small header-only library (single header `CSV.h`) provides utilities to read and write CSV files with support for:
@@ -13,7 +23,7 @@ This small header-only library (single header `CSV.h`) provides utilities to rea
 - Combined read/write access via `ReaderWriter` for working with the same file.
 - Fine-grained exceptions and optional warning callbacks.
 
-The code requires C++17 or newer.
+The code requires C++17 or newer. It is also the largest (and generally most reusable) project in this repository, included in other projects of mine.
 
 ## Files
 

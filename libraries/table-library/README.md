@@ -3,6 +3,10 @@
 
 Header-only C++17 Table utilities for small in-memory 2D tables (rows of string fields).
 
+## About AI Assistance
+
+This library was written almost entirely by me. AI (GitHub Copilot) provided occasional (mathematical) guidance, bug fixes, and documentation suggestions, but did not generate code in large batches.
+
 ## Overview
 
 This lightweight header-only library (`Table.hpp`) provides a convenient 2D table abstraction focused on CSV-like data: rows are `std::vector<std::string>` and the table is a `std::vector` of rows. The API emphasizes safety (checked access) and ergonomics (operator[] row proxies and iterator support).
