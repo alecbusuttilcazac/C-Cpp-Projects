@@ -8,16 +8,19 @@
 
 
 TSPSolver::TSPSolver(
-    uint32_t seed, const DistanceMatrix& matrix, uint8_t verbosity, 
-    std::ostream& stream, FN_InitialiseTour fn_it
+    uint32_t seed,              const DistanceMatrix& matrix, 
+    uint8_t verbosity,          uint8_t timingMode,
+    std::ostream& stream,       
+    
+    FN_InitialiseTour fn_it,FN_SetStartCity fn_sc
 )
-:   matrix(matrix),
-    verbosity(verbosity),
-    out(&stream),
-    fn_initialiseTour(fn_it)
+:   /* {} */                    matrix(matrix),
+    verbosity(verbosity),       timingMode(timingMode),
+    out(&stream),               fn_initialiseTour(fn_it),
+    fn_selectStartCity(fn_sc)
 {
     // Set seed
-    if(seed == RANDOM_SEED)
+    if(seed == RANDOM_SEED) // default = 0, randomises seed
         rng.seed(std::random_device{}());
     else
         rng.seed(seed);
@@ -31,23 +34,32 @@ TSPSolver::Builder& TSPSolver::Builder::setSeed(uint32_t seed){
 }
 
 TSPSolver::Builder& TSPSolver::Builder::setDistanceMatrix(const DistanceMatrix& matrix){
-    distanceMatrix = matrix;
+    this->distanceMatrix = matrix;
     return *this;
 }
 
 TSPSolver::Builder& TSPSolver::Builder::setVerbosity(uint8_t level){
-    verbosity = level;
+    this->verbosity = level;
     return *this;
 }
 
 TSPSolver::Builder& TSPSolver::Builder::setLogOutput(std::ostream& stream){
-    out = &stream;
+    this->out = &stream;
     return *this;
 }
 
-TSPSolver::Builder& TSPSolver::Builder::setFN_initialiseTour(FN_InitialiseTour fn){
-    fn_initialiseTour = fn;
+TSPSolver::Builder& TSPSolver::Builder::setTimingMode(uint8_t timingMode){
+    this->timingMode = timingMode;
     return *this;
+}
+
+TSPSolver::Builder& TSPSolver::Builder::setFN_setStartCity(FN_SetStartCity fn){
+    this->fn_setStartCity = fn;
+    return *this;
+}
+
+Tour TSPSolver::makeTour(const std::vector<uint32_t>& cities){
+    return Tour(cities, calculateTourDistance(cities, matrix));
 }
 
 double TSPSolver::calculateTourDistance(
@@ -74,7 +86,8 @@ double TSPSolver::calculateTourDistance(
 }
 
 Tour TSPSolver::default_nearestNeighbour(
-    const DistanceMatrix& distanceMatrix, std::mt19937& rng, uint32_t startingCity
+    const DistanceMatrix& distanceMatrix, std::mt19937& rng, 
+    uint32_t startingCity
 ){
     /*  Default NN implementation:
         ->  choose starting city AT RANDOM
@@ -114,4 +127,10 @@ Tour TSPSolver::default_nearestNeighbour(
     
     tour.cost = calculateTourDistance(tour.tour, distanceMatrix);
     return tour;
+}
+
+uint32_t default_setStartCity(
+    OPTIONAL const DistanceMatrix& matrix, OPTIONAL std::mt19937& rng
+){
+    return 0;
 }

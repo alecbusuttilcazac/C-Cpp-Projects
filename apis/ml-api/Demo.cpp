@@ -17,9 +17,13 @@ static double coolTemperature_fast(double currentTemperature,
 }
 
 static bool stopEarlyOnStall(
-    const SA_Config& config, double currentTemperature, uint32_t outerIteration,
-    [[maybe_unused]] double bestCostSoFar, [[maybe_unused]] double bestCostPreviousIter,
-    [[maybe_unused]] uint32_t itersSinceBestImprovement
+    const SA_Config& config,                
+    double currentTemperature, 
+    uint32_t outerIteration,                
+    [[maybe_unused]] double bestCostSoFar,
+    [[maybe_unused]] double bestCostPreviousIter,
+    [[maybe_unused]] uint32_t itersSinceBestImprovement,
+    [[maybe_unused]] double elapsedSeconds
 ){
     if(currentTemperature <= config.minimumTemperature)
         return true;

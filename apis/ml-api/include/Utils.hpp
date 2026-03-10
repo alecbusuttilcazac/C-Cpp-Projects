@@ -17,6 +17,18 @@ struct City{
 struct Tour{
     std::vector<uint32_t> tour;
     double cost = INFINITY;
+    
+    Tour(std::vector<uint32_t> tour, double cost)
+    :   tour(tour),
+        cost(cost)
+    {}
+    
+    uint32_t& operator[](size_t index){
+        return tour[index];
+    }
+    uint32_t& operator[](size_t index) const {
+        return tour[index];
+    }
 };
 
 struct Result{

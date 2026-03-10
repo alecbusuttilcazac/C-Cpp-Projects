@@ -45,3 +45,4 @@
 .vscode/
 cpp-csv-library/example.csv
 cpp-table-library/tests
+testing/
